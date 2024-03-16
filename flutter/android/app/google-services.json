@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280557661374",
+    "project_id": "diabetic-retinopathy-det-44a75",
+    "storage_bucket": "diabetic-retinopathy-det-44a75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280557661374:android:e619eab34b2d26392e02ef",
+        "android_client_info": {
+          "package_name": "com.example.diabeticretinopathydetection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYQdEXNnrF5gNO0nvJwClPojQZgGQYMtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
