@@ -1,7 +1,10 @@
+import 'package:diabeticretinopathydetection/services/videosdk_service.dart';
 import 'package:diabeticretinopathydetection/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:diabeticretinopathydetection/ui/dialogs/info_alert/info_alert_dialog.dart';
+import 'package:diabeticretinopathydetection/ui/views/home/aler_widget/aler_widget_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/home/home_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/startup/startup_view.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -10,6 +13,9 @@ import 'package:diabeticretinopathydetection/ui/views/login/login_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/register/register_view.dart';
 import 'package:diabeticretinopathydetection/services/user_service.dart';
 import 'package:diabeticretinopathydetection/services/firestore_service.dart';
+import 'package:diabeticretinopathydetection/ui/views/doctor/doctor_view.dart';
+import 'package:videosdk/videosdk.dart';
+import 'package:diabeticretinopathydetection/ui/views/patient/patient_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -20,6 +26,10 @@ import 'package:diabeticretinopathydetection/services/firestore_service.dart';
 
     MaterialRoute(page: LoginView),
     MaterialRoute(page: RegisterView),
+    MaterialRoute(page: DoctorView),
+    MaterialRoute(page: PatientView),
+    MaterialRoute(page: AlerWidgetView),
+// @stacked-route
 // @stacked-route
   ],
   dependencies: [
@@ -30,6 +40,7 @@ import 'package:diabeticretinopathydetection/services/firestore_service.dart';
     LazySingleton(classType: FirestoreService),
     LazySingleton(classType: FirebaseAuthenticationService),
     LazySingleton(classType: SnackbarService),
+    LazySingleton(classType: VideosdkService),
 // @stacked-service
   ],
   bottomsheets: [

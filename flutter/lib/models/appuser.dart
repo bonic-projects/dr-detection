@@ -1,30 +1,32 @@
 class AppUser {
-  final String id;
-  final String fullName;
-  final String photoUrl;
-  final String email;
-  final String userRole;
-  final double latitude;
-  final double homeLat;
-  final double longitude;
-  final double homeLong;
-  final String place;
-  final String phone;
-  final DateTime regTime;
+  final String? id;
+  final String? fullName;
+  final String? photoUrl;
+  final String? email;
+  final String? userRole;
+  final double? latitude;
+  final double? homeLat;
+  final double? longitude;
+  final double? homeLong;
+  final String? place;
+  final String? phone;
+  final DateTime? regTime;
+  final String? videoId;
 
   AppUser({
-    required this.id,
-    required this.fullName,
-    required this.photoUrl,
-    required this.email,
-    required this.userRole,
-    required this.latitude,
-    required this.longitude,
-    required this.homeLat,
-    required this.homeLong,
-    required this.place,
-    required this.regTime,
-    required this.phone,
+     this.id,
+     this.fullName,
+     this.photoUrl,
+     this.email,
+     this.userRole,
+     this.latitude,
+     this.phone,
+     this.longitude,
+     this.homeLat,
+     this.homeLong,
+     this.place,
+     this.regTime,
+     this.videoId,
   });
 
   AppUser.fromMap(Map<String, dynamic> data)
@@ -39,6 +41,7 @@ class AppUser {
         homeLong = data['homeLong'] ?? 0.0,
         phone = data['phone'] ?? "",
         place = data['place'] ?? "",
+        videoId = data['videoId'],
         regTime =
             data['regTime'] != null ? data['regTime'].toDate() : DateTime.now();
 
@@ -55,6 +58,7 @@ class AppUser {
       'place': place,
       'phone': "+918137810031",
       'regTime': regTime,
+      'videoId':videoId,
     };
     // if (imgString != null) map['imgString'] = imgString!;
     return map;

@@ -9,7 +9,6 @@ import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends FormViewModel {
-
   final log = getLogger('RegisterViewModel');
   final _userService = locator<UserService>();
 
@@ -54,6 +53,7 @@ class RegisterViewModel extends FormViewModel {
       );
       if (result.user != null) {
         String? error = await _userService.createUpdateUser(AppUser(
+          
           id: result.user!.uid,
           fullName: nameValue!,
           photoUrl: "",
@@ -68,8 +68,12 @@ class RegisterViewModel extends FormViewModel {
           phone: "",
         ));
         if (error == null) {
-          _userService.fetchUser();
-          _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+          await _userService.fetchUser();
+        if (_userService.user!.userRole == "patient") {
+          _navigationService.pushNamedAndRemoveUntil(Routes.patientView);
+        } else {
+          _navigationService.pushNamedAndRemoveUntil(Routes.doctorView);
+        }
         } else {
           log.i("Firebase error");
 

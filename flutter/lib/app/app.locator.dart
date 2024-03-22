@@ -15,6 +15,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/firestore_service.dart';
 import '../services/user_service.dart';
+import '../services/videosdk_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -34,4 +35,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => FirestoreService());
   locator.registerLazySingleton(() => FirebaseAuthenticationService());
   locator.registerLazySingleton(() => SnackbarService());
+  locator.registerLazySingleton(() => VideosdkService());
 }

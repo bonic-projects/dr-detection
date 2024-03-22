@@ -40,7 +40,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                 'assets/images/logo.png',
                 height: 150,
               ),
-              Text(
+              const Text(
                 "Diabetic Retinopathy Detection",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),

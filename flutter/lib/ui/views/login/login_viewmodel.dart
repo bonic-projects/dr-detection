@@ -8,15 +8,16 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-
 class LoginViewModel extends FormViewModel {
   final log = getLogger('LoginViewModel');
 
   final FirebaseAuthenticationService _firebaseAuthenticationService =
-     locator<FirebaseAuthenticationService>();
+      locator<FirebaseAuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserService>();
   final _snackBarService = locator<SnackbarService>();
+
+  //String? get node => _userService.user?.userRole ?? " no role";
 
   void onModelReady() {}
 
@@ -32,8 +33,16 @@ class LoginViewModel extends FormViewModel {
         password: passwordValue!,
       );
       if (result.user != null) {
-        _userService.fetchUser();
-        _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+
+       await _userService.fetchUser();
+        if (_userService.user!.userRole == "patient") {
+          _navigationService.pushNamedAndRemoveUntil(Routes.patientView);
+        } else {
+          _navigationService.pushNamedAndRemoveUntil(Routes.doctorView);
+        }
+         // Await fetchUser() if needed
+        
+        
       } else {
         log.e("Error: ${result.errorMessage}");
 
@@ -43,5 +52,10 @@ class LoginViewModel extends FormViewModel {
       }
     }
     setBusy(false);
+  }
+
+  void logoutUser() {
+    _userService.logout();
+    _navigationService.pushNamedAndRemoveUntil(Routes.loginRegisterView);
   }
 }

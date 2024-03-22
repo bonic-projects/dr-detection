@@ -1,8 +1,6 @@
 import 'package:diabeticretinopathydetection/ui/common/app_colors.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final String text;

@@ -1,7 +1,5 @@
-import 'package:diabeticretinopathydetection/ui/common/ui_helpers.dart';
 import 'package:diabeticretinopathydetection/ui/views/login_register/widgets/loginRegister.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'login_register_viewmodel.dart';
 
@@ -32,10 +30,10 @@ class LoginRegisterView extends StackedView<LoginRegisterViewModel> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   left: 50,
                   bottom: 60,
-                  child: const Text(
+                  child: Text(
                     "Diabetic Retinopathy Detection",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),

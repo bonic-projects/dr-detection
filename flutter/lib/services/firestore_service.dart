@@ -17,6 +17,7 @@ class FirestoreService {
     log.i('user:$user');
     try {
       final userDocument = _usersCollection.doc(user.id);
+
       await userDocument.set(user.toJson(keyword), SetOptions(merge: true));
       log.v('UserCreated at ${userDocument.path}');
       return true;
@@ -26,11 +27,43 @@ class FirestoreService {
     }
   }
 
-  Future<AppUser?> getUser({required String userId}) async {
+  Future<bool> updateVideoId({required String videoId}) async {
+    log.i('Video Id update');
+    try {
+      final userDocument =
+          _usersCollection.doc(_authenticationService.currentUser!.uid);
+      await userDocument.update({"videoId": videoId});
+      // log.v('UserCreated at ${userDocument.path}');
+      return true;
+    } catch (error) {
+      log.e("Error $error");
+      return false;
+    }
+  }
+
+  Future<bool> deleteVideoId() async {
+    log.i('Deleting Video Id');
+    try {
+      final userDocument = _usersCollection
+          .doc(_authenticationService.currentUser!.uid); // Get user document
+      await userDocument.update({"videoId": FieldValue.delete()});
+      log.i('Video Id deleted successfully');
+      return true;
+    } catch (error) {
+      log.e("Error deleting Video Id: $error");
+      return false;
+    }
+  }
+
+  Future<AppUser?> getUser({required String userId, AppUser? user}) async {
     log.i('userId:$userId');
+    log.i('userId:$user');
+    //  final userRoll = _usersCollection.doc(user!.userRole);
+    // log.i('User role document: $userRoll');
 
     if (userId.isNotEmpty) {
       final userDoc = await _usersCollection.doc(userId).get();
+
       if (!userDoc.exists) {
         log.v('We have no user with id $userId in our database');
         return null;
@@ -45,6 +78,26 @@ class FirestoreService {
       return null;
     }
   }
+
+  Future<List<AppUser>> getUsersWithVideoId() async {
+  log.i('Fetching users with Video Id');
+  try {
+    final querySnapshot = await _usersCollection.where('videoId', isNotEqualTo: null).get();
+    log.i("Video id users found: ${querySnapshot.size}");
+    
+    final List<AppUser> usersList = [];
+    querySnapshot.docs.forEach((doc) {
+      final userData = doc.data() as Map<String, dynamic>;
+      final user = AppUser.fromMap(userData);
+      usersList.add(user);
+    });
+    
+    return usersList;
+  } catch (error) {
+    log.e("Error fetching users with Video Id: $error");
+    return [];
+  }
+}
 
   Future<List<AppUser>> searchUsers(String keyword) async {
     log.i("searching for $keyword");
@@ -68,23 +121,6 @@ class FirestoreService {
         "lat": lat,
         "long": long,
         "place": place,
-      });
-      // log.v('UserCreated at ${userDocument.path}');
-      return true;
-    } catch (error) {
-      log.e("Error $error");
-      return false;
-    }
-  }
-
-  Future<bool> updateHomeLocation(double lat, double long) async {
-    log.i('Home location update');
-    try {
-      final userDocument =
-          _usersCollection.doc(_authenticationService.currentUser!.uid);
-      await userDocument.update({
-        "homeLat": lat,
-        "homeLong": long,
       });
       // log.v('UserCreated at ${userDocument.path}');
       return true;

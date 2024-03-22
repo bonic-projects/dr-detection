@@ -19,7 +19,6 @@ class StartupView extends StackedView<StartupViewModel> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            
             Text(
               'Diabetic Retinopathy Detection',
               style: TextStyle(
@@ -41,7 +40,6 @@ class StartupView extends StackedView<StartupViewModel> {
                   width: 16,
                   height: 16,
                   child: CircularProgressIndicator(
-
                     color: Color.fromARGB(255, 212, 69, 30),
                     strokeWidth: 6,
                   ),

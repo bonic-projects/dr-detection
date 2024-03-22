@@ -34,7 +34,6 @@ import 'register_viewmodel.dart';
     validator: FormValidators.validatePassword,
   ),
 ])
-
 class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -54,11 +53,11 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-               Image.asset(
-                 'assets/images/logo.png',
-                 height: 150,
-               ),
-               const Text(
+              Image.asset(
+                'assets/images/logo.png',
+                height: 150,
+              ),
+              const Text(
                 "Diabetic Retinopathy Detection",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -174,7 +173,7 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
   ) =>
       RegisterViewModel();
 
-      @override
+  @override
   void onViewModelReady(RegisterViewModel viewModel) {
     syncFormWithViewModel(viewModel);
     viewModel.onModelReady();

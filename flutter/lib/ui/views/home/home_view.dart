@@ -1,29 +1,45 @@
+import 'package:diabeticretinopathydetection/ui/widgets/meeting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
 
-class HomeView extends StackedView<HomeViewModel> {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  final String meetingid;
+  HomeView({Key? key, required this.meetingid}) : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    HomeViewModel viewModel,
-    Widget? child,
-  ) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text('Home Screen'),
-        )
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<HomeViewModel>.reactive(
+      viewModelBuilder: () => HomeViewModel(),
+      // onModelReady: (model) => model.createVideoCall(), // Call createVideoCall on model ready
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          actions: [
+            PopScope(
+                canPop: false,
+                onPopInvoked: (bool value) {
+                  return model.alertdialog();
+                },
+                child: TextButton(
+                    onPressed: model.alertdialog,
+                    child: const Text(
+                      'Stop calling',
+                      style: TextStyle(color: Colors.red),
+                    )))
+          ],
+        ),
+        body: SafeArea(
+          child: Center(
+            child: model.isBusy
+                ? CircularProgressIndicator() // Show a loader while busy
+                : MeetingScreen(
+                    meetingId: meetingid,
+                    token: model.sdkToken,
+                  ),
+          ),
+        ),
       ),
     );
   }
-
-  @override
-  HomeViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      HomeViewModel();
 }
