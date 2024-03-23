@@ -67,7 +67,7 @@ class UserService {
   Future<AppUser?> fetchVideoIdUser() async {
     try {
       List<AppUser>? idUser = await _firestoreService.getUsersWithVideoId();
-      if ( idUser.isNotEmpty) {
+      if (idUser.isNotEmpty) {
         _idUser = idUser.first;
       }
       return _idUser;

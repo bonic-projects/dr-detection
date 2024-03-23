@@ -80,24 +80,25 @@ class FirestoreService {
   }
 
   Future<List<AppUser>> getUsersWithVideoId() async {
-  log.i('Fetching users with Video Id');
-  try {
-    final querySnapshot = await _usersCollection.where('videoId', isNotEqualTo: null).get();
-    log.i("Video id users found: ${querySnapshot.size}");
-    
-    final List<AppUser> usersList = [];
-    querySnapshot.docs.forEach((doc) {
-      final userData = doc.data() as Map<String, dynamic>;
-      final user = AppUser.fromMap(userData);
-      usersList.add(user);
-    });
-    
-    return usersList;
-  } catch (error) {
-    log.e("Error fetching users with Video Id: $error");
-    return [];
+    log.i('Fetching users with Video Id');
+    try {
+      final querySnapshot =
+          await _usersCollection.where('videoId', isNotEqualTo: null).get();
+      log.i("Video id users found: ${querySnapshot.size}");
+
+      final List<AppUser> usersList = [];
+      querySnapshot.docs.forEach((doc) {
+        final userData = doc.data() as Map<String, dynamic>;
+        final user = AppUser.fromMap(userData);
+        usersList.add(user);
+      });
+
+      return usersList;
+    } catch (error) {
+      log.e("Error fetching users with Video Id: $error");
+      return [];
+    }
   }
-}
 
   Future<List<AppUser>> searchUsers(String keyword) async {
     log.i("searching for $keyword");

@@ -19,23 +19,17 @@ class AlerWidgetView extends StackedView<AlerWidgetViewModel> {
       ),
       actions: <Widget>[
         TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          onPressed: 
-            viewModel.popPop,
-          child: const Text('No')
-          
-        ),
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            onPressed: viewModel.popPop,
+            child: const Text('No')),
         TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          onPressed: 
-            viewModel.popback,
-          child: const Text('Yes')
-          
-        ),
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            onPressed: viewModel.popback,
+            child: const Text('Yes')),
       ],
     );
   }

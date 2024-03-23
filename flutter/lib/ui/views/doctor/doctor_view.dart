@@ -29,19 +29,22 @@ class DoctorView extends StatelessWidget {
                   onTap: () {
                     viewModel.openVideo();
                   },
-                  child: _buildUserCards(viewModel.users)),
+                  child: _buildUserCards(viewModel.users,viewModel.openVideo)),
         );
       },
     );
   }
 
-  Widget _buildUserCards(List<AppUser> users) {
+  Widget _buildUserCards(List<AppUser> users, ontap ) {
+   
     return ListView.builder(
+      
       itemCount: users.length,
       itemBuilder: (context, index) {
+       // final void Function() ontap ;
         final user = users[index];
         return InkResponse(
-          onTap: () {},
+          onTap: ontap,
           child: Card(
             child: ListTile(
               title: Text(user.fullName ?? 'No Name'),

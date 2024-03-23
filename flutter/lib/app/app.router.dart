@@ -5,6 +5,8 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:diabeticretinopathydetection/ui/views/chat/chat_view.dart'
+    as _i10;
 import 'package:diabeticretinopathydetection/ui/views/doctor/doctor_view.dart'
     as _i7;
 import 'package:diabeticretinopathydetection/ui/views/home/aler_widget/aler_widget_view.dart'
@@ -21,10 +23,10 @@ import 'package:diabeticretinopathydetection/ui/views/register/register_view.dar
     as _i6;
 import 'package:diabeticretinopathydetection/ui/views/startup/startup_view.dart'
     as _i3;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i11;
+import 'package:stacked_services/stacked_services.dart' as _i12;
 
 class Routes {
   static const homeView = '/home-view';
@@ -43,6 +45,8 @@ class Routes {
 
   static const alerWidgetView = '/aler-widget-view';
 
+  static const chatView = '/chat-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -52,6 +56,7 @@ class Routes {
     doctorView,
     patientView,
     alerWidgetView,
+    chatView,
   };
 }
 
@@ -89,56 +94,66 @@ class StackedRouter extends _i1.RouterBase {
       Routes.alerWidgetView,
       page: _i9.AlerWidgetView,
     ),
+    _i1.RouteDef(
+      Routes.chatView,
+      page: _i10.ChatView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
       final args = data.getArgs<HomeViewArguments>(nullOk: false);
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i2.HomeView(key: args.key, meetingid: args.meetingid),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.LoginRegisterView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginRegisterView(),
         settings: data,
       );
     },
     _i5.LoginView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.LoginView(),
         settings: data,
       );
     },
     _i6.RegisterView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.RegisterView(),
         settings: data,
       );
     },
     _i7.DoctorView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.DoctorView(),
         settings: data,
       );
     },
     _i8.PatientView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.PatientView(),
         settings: data,
       );
     },
     _i9.AlerWidgetView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.AlerWidgetView(),
+        settings: data,
+      );
+    },
+    _i10.ChatView: (data) {
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i10.ChatView(),
         settings: data,
       );
     },
@@ -157,7 +172,7 @@ class HomeViewArguments {
     required this.meetingid,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
   final String meetingid;
 
@@ -178,9 +193,9 @@ class HomeViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i11.NavigationService {
+extension NavigatorStateExtension on _i12.NavigationService {
   Future<dynamic> navigateToHomeView({
-    _i10.Key? key,
+    _i11.Key? key,
     required String meetingid,
     int? routerId,
     bool preventDuplicates = true,
@@ -294,8 +309,22 @@ extension NavigatorStateExtension on _i11.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToChatView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.chatView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView({
-    _i10.Key? key,
+    _i11.Key? key,
     required String meetingid,
     int? routerId,
     bool preventDuplicates = true,
@@ -403,6 +432,20 @@ extension NavigatorStateExtension on _i11.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.alerWidgetView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithChatView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.chatView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -1,4 +1,3 @@
-
 import 'package:diabeticretinopathydetection/app/app.locator.dart';
 import 'package:diabeticretinopathydetection/app/app.router.dart';
 import 'package:diabeticretinopathydetection/services/user_service.dart';
@@ -10,22 +9,18 @@ class AlerWidgetViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   //final _movementDatabaseService = locator<MovementDatabaseService>();
 
-  
-
   void popPop() {
     _naviigatorService.popRepeated(1);
   }
 
-  
-
-  
   void popback() {
-      
-    
     _userService.deleteVideoId();
-  
-    _naviigatorService.pushNamedAndRemoveUntil(Routes.patientView);
-  }
+    if(_userService.user!.userRole == "patient"){
+      _naviigatorService.pushNamedAndRemoveUntil(Routes.patientView);
+    }else{
+      _naviigatorService.pushNamedAndRemoveUntil(Routes.doctorView);
+    }
 
-  
+    
+  }
 }

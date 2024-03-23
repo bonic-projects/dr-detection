@@ -19,8 +19,6 @@ class PatientViewModel extends BaseViewModel {
     _navigationService.pushNamedAndRemoveUntil(Routes.loginRegisterView);
   }
 
-  
-
   final _videosdkService = locator<VideosdkService>();
   void createVideoCall() async {
     setBusy(true);
@@ -38,11 +36,6 @@ class PatientViewModel extends BaseViewModel {
     }
   }
 
-
-
   String _meetingId = "";
   String get meetingId => _meetingId;
- 
-
-  
 }

@@ -14,19 +14,19 @@ class AppUser {
   final String? videoId;
 
   AppUser({
-     this.id,
-     this.fullName,
-     this.photoUrl,
-     this.email,
-     this.userRole,
-     this.latitude,
-     this.phone,
-     this.longitude,
-     this.homeLat,
-     this.homeLong,
-     this.place,
-     this.regTime,
-     this.videoId,
+    this.id,
+    this.fullName,
+    this.photoUrl,
+    this.email,
+    this.userRole,
+    this.latitude,
+    this.phone,
+    this.longitude,
+    this.homeLat,
+    this.homeLong,
+    this.place,
+    this.regTime,
+    this.videoId,
   });
 
   AppUser.fromMap(Map<String, dynamic> data)
@@ -58,7 +58,7 @@ class AppUser {
       'place': place,
       'phone': "+918137810031",
       'regTime': regTime,
-      'videoId':videoId,
+      'videoId': videoId,
     };
     // if (imgString != null) map['imgString'] = imgString!;
     return map;

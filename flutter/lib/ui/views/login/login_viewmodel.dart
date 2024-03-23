@@ -33,16 +33,13 @@ class LoginViewModel extends FormViewModel {
         password: passwordValue!,
       );
       if (result.user != null) {
-
-       await _userService.fetchUser();
+        await _userService.fetchUser();
         if (_userService.user!.userRole == "patient") {
           _navigationService.pushNamedAndRemoveUntil(Routes.patientView);
         } else {
           _navigationService.pushNamedAndRemoveUntil(Routes.doctorView);
         }
-         // Await fetchUser() if needed
-        
-        
+        // Await fetchUser() if needed
       } else {
         log.e("Error: ${result.errorMessage}");
 

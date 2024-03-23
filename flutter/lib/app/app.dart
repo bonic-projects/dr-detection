@@ -16,6 +16,7 @@ import 'package:diabeticretinopathydetection/services/firestore_service.dart';
 import 'package:diabeticretinopathydetection/ui/views/doctor/doctor_view.dart';
 import 'package:videosdk/videosdk.dart';
 import 'package:diabeticretinopathydetection/ui/views/patient/patient_view.dart';
+import 'package:diabeticretinopathydetection/ui/views/chat/chat_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -29,6 +30,7 @@ import 'package:diabeticretinopathydetection/ui/views/patient/patient_view.dart'
     MaterialRoute(page: DoctorView),
     MaterialRoute(page: PatientView),
     MaterialRoute(page: AlerWidgetView),
+    MaterialRoute(page: ChatView),
 // @stacked-route
 // @stacked-route
   ],
