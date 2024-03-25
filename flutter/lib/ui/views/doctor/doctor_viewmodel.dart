@@ -32,11 +32,11 @@ class DoctorViewModel extends BaseViewModel {
   Future<void> fetchUserData() async {
     setBusy(true); // Set ViewModel state to busy
     try {
-      AppUser? userWithVideoId = await _userService.fetchVideoIdUser();
+      List<AppUser?>? userWithVideoId = await _userService.fetchVideoIdUser();
       log.v(userWithVideoId);
       if (userWithVideoId != null) {
         // If a user with videoId is found, add it to the list of users
-        _users = [userWithVideoId];
+        _users = userWithVideoId as List<AppUser>;
         log.v(_users);
         String? meetingId = users.first.videoId;
       } else {
@@ -49,6 +49,13 @@ class DoctorViewModel extends BaseViewModel {
     }
     setBusy(false); // Set ViewModel state to not busy
   }
+
+  // Future<void> fetchIsVideoOn() async {
+  //   setBusy(true);
+  //   try{
+      
+  //   }
+  // }
 
   void openVideo() {
     _videosdkService.token;

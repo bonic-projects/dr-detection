@@ -66,6 +66,7 @@ class RegisterViewModel extends FormViewModel {
           homeLat: 0.0,
           homeLong: 0.0,
           phone: "",
+          
         ));
         if (error == null) {
           await _userService.fetchUser();

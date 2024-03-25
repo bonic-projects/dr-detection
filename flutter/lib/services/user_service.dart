@@ -1,6 +1,5 @@
-import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:diabeticretinopathydetection/app/app.locator.dart';
 import 'package:diabeticretinopathydetection/app/app.logger.dart';
 import 'package:diabeticretinopathydetection/models/appuser.dart';
@@ -61,14 +60,14 @@ class UserService {
     return _user;
   }
 
-  AppUser? _idUser;
-  AppUser? get idUser => _idUser;
+  List<AppUser?> get idUser => _idUser;
+  late List<AppUser?> _idUser;
 
-  Future<AppUser?> fetchVideoIdUser() async {
+  Future<List<AppUser?>?> fetchVideoIdUser() async {
     try {
       List<AppUser>? idUser = await _firestoreService.getUsersWithVideoId();
       if (idUser.isNotEmpty) {
-        _idUser = idUser.first;
+        _idUser = idUser.toList();
       }
       return _idUser;
     } catch (e) {

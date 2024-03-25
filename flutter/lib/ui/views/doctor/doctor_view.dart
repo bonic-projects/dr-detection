@@ -25,34 +25,35 @@ class DoctorView extends StatelessWidget {
           ),
           body: viewModel.isBusy
               ? const Center(child: CircularProgressIndicator())
-              : InkResponse(
-                  onTap: () {
-                    viewModel.openVideo();
-                  },
-                  child: _buildUserCards(viewModel.users,viewModel.openVideo)),
+              : _buildUserCards(viewModel.users, viewModel.openVideo),
         );
       },
     );
   }
 
-  Widget _buildUserCards(List<AppUser> users, ontap ) {
-   
-    return ListView.builder(
-      
-      itemCount: users.length,
-      itemBuilder: (context, index) {
-       // final void Function() ontap ;
-        final user = users[index];
-        return InkResponse(
-          onTap: ontap,
-          child: Card(
-            child: ListTile(
-              title: Text(user.fullName ?? 'No Name'),
-              subtitle: Text(user.videoId ?? 'No Video ID'),
+  Widget _buildUserCards(List<AppUser> users, ontap) {
+    return (users.isNotEmpty)
+        ? ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              // final void Function() ontap ;
+              final user = users[index];
+              return InkResponse(
+                onTap: ontap,
+                child: Card(
+                  child: ListTile(
+                    title: Text(user.fullName ?? 'No Name'),
+                    subtitle: Text(user.videoId ?? 'No Video ID'),
+                  ),
+                ),
+              );
+            },
+          )
+        : Center(
+            child: Text(
+              "Waiting for calls",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
             ),
-          ),
-        );
-      },
-    );
+          );
   }
 }

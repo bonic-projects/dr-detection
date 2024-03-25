@@ -1,3 +1,5 @@
+
+
 class AppUser {
   final String? id;
   final String? fullName;
@@ -12,8 +14,10 @@ class AppUser {
   final String? phone;
   final DateTime? regTime;
   final String? videoId;
+  final bool? isVideoOn;
 
   AppUser({
+     this.isVideoOn,
     this.id,
     this.fullName,
     this.photoUrl,
@@ -31,6 +35,7 @@ class AppUser {
 
   AppUser.fromMap(Map<String, dynamic> data)
       : id = data['id'] ?? "",
+      isVideoOn = data[false],
         fullName = data['fullName'] ?? "nil",
         photoUrl = data['photoUrl'] ?? "nil",
         email = data['email'] ?? "nil",
@@ -47,6 +52,7 @@ class AppUser {
 
   Map<String, dynamic> toJson(keyword) {
     Map<String, dynamic> map = {
+      'isVideoOn':isVideoOn,
       'id': id,
       'fullName': fullName,
       'photoUrl': photoUrl,

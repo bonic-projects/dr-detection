@@ -3,7 +3,6 @@ import 'package:diabeticretinopathydetection/app/app.locator.dart';
 import 'package:diabeticretinopathydetection/app/app.logger.dart';
 import 'package:diabeticretinopathydetection/app/constants/app_keys.dart';
 import 'package:diabeticretinopathydetection/models/appuser.dart';
-import 'package:diabeticretinopathydetection/models/reminder.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 
 class FirestoreService {
@@ -33,6 +32,7 @@ class FirestoreService {
       final userDocument =
           _usersCollection.doc(_authenticationService.currentUser!.uid);
       await userDocument.update({"videoId": videoId});
+      await userDocument.update(({"isVideoOn": true}));
       // log.v('UserCreated at ${userDocument.path}');
       return true;
     } catch (error) {
@@ -46,6 +46,7 @@ class FirestoreService {
     try {
       final userDocument = _usersCollection
           .doc(_authenticationService.currentUser!.uid); // Get user document
+      await userDocument.update(({"isVideoOn": false}));
       await userDocument.update({"videoId": FieldValue.delete()});
       log.i('Video Id deleted successfully');
       return true;
@@ -57,7 +58,7 @@ class FirestoreService {
 
   Future<AppUser?> getUser({required String userId, AppUser? user}) async {
     log.i('userId:$userId');
-    log.i('userId:$user');
+    log.i('user:$user');
     //  final userRoll = _usersCollection.doc(user!.userRole);
     // log.i('User role document: $userRoll');
 
@@ -83,14 +84,17 @@ class FirestoreService {
     log.i('Fetching users with Video Id');
     try {
       final querySnapshot =
-          await _usersCollection.where('videoId', isNotEqualTo: null).get();
+          await _usersCollection.where('isVideoOn', isEqualTo: true).get();
       log.i("Video id users found: ${querySnapshot.size}");
 
       final List<AppUser> usersList = [];
       querySnapshot.docs.forEach((doc) {
+        log.i("print");
         final userData = doc.data() as Map<String, dynamic>;
         final user = AppUser.fromMap(userData);
         usersList.add(user);
+        log.i(usersList.length);
+
       });
 
       return usersList;
@@ -100,127 +104,127 @@ class FirestoreService {
     }
   }
 
-  Future<List<AppUser>> searchUsers(String keyword) async {
-    log.i("searching for $keyword");
-    final query = _usersCollection
-        .where('keyword', arrayContains: keyword.toLowerCase())
-        .limit(5);
+  // Future<List<AppUser>> searchUsers(String keyword) async {
+  //   log.i("searching for $keyword");
+  //   final query = _usersCollection
+  //       .where('keyword', arrayContains: keyword.toLowerCase())
+  //       .limit(5);
 
-    final snapshot = await query.get();
+  //   final snapshot = await query.get();
 
-    return snapshot.docs
-        .map((doc) => AppUser.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
-  }
+  //   return snapshot.docs
+  //       .map((doc) => AppUser.fromMap(doc.data() as Map<String, dynamic>))
+  //       .toList();
+  // }
 
-  Future<bool> updateLocation(double lat, double long, String place) async {
-    log.i('Location update');
-    try {
-      final userDocument =
-          _usersCollection.doc(_authenticationService.currentUser!.uid);
-      await userDocument.update({
-        "lat": lat,
-        "long": long,
-        "place": place,
-      });
-      // log.v('UserCreated at ${userDocument.path}');
-      return true;
-    } catch (error) {
-      log.e("Error $error");
-      return false;
-    }
-  }
+  // Future<bool> updateLocation(double lat, double long, String place) async {
+  //   log.i('Location update');
+  //   try {
+  //     final userDocument =
+  //         _usersCollection.doc(_authenticationService.currentUser!.uid);
+  //     await userDocument.update({
+  //       "lat": lat,
+  //       "long": long,
+  //       "place": place,
+  //     });
+  //     // log.v('UserCreated at ${userDocument.path}');
+  //     return true;
+  //   } catch (error) {
+  //     log.e("Error $error");
+  //     return false;
+  //   }
+  // }
 
-  Future<bool> updateBystander(String uid) async {
-    log.i('Bystander update');
-    try {
-      final userDocument =
-          _usersCollection.doc(_authenticationService.currentUser!.uid);
-      await userDocument.update({
-        "bystanders": FieldValue.arrayUnion([uid])
-      });
-      // log.v('UserCreated at ${userDocument.path}');
-      return true;
-    } catch (error) {
-      log.e("Error $error");
-      return false;
-    }
-  }
+  // Future<bool> updateBystander(String uid) async {
+  //   log.i('Bystander update');
+  //   try {
+  //     final userDocument =
+  //         _usersCollection.doc(_authenticationService.currentUser!.uid);
+  //     await userDocument.update({
+  //       "bystanders": FieldValue.arrayUnion([uid])
+  //     });
+  //     // log.v('UserCreated at ${userDocument.path}');
+  //     return true;
+  //   } catch (error) {
+  //     log.e("Error $error");
+  //     return false;
+  //   }
+  // }
 
-  Future<List<AppUser>> getUsersWithBystander() async {
-    QuerySnapshot querySnapshot = await _usersCollection
-        .where('bystanders',
-            arrayContains: _authenticationService.currentUser!.uid)
-        .get();
+  // Future<List<AppUser>> getUsersWithBystander() async {
+  //   QuerySnapshot querySnapshot = await _usersCollection
+  //       .where('bystanders',
+  //           arrayContains: _authenticationService.currentUser!.uid)
+  //       .get();
 
-    return querySnapshot.docs
-        .map((snapshot) =>
-            AppUser.fromMap(snapshot.data() as Map<String, dynamic>))
-        .toList();
-  }
+  //   return querySnapshot.docs
+  //       .map((snapshot) =>
+  //           AppUser.fromMap(snapshot.data() as Map<String, dynamic>))
+  //       .toList();
+  // }
 
-  String? generateReminderDocumentId(String userId) {
-    try {
-      // Add a document with an auto-generated ID
-      DocumentReference documentReference =
-          _usersCollection.doc(userId).collection('reminders').doc();
+  // String? generateReminderDocumentId(String userId) {
+  //   try {
+  //     // Add a document with an auto-generated ID
+  //     DocumentReference documentReference =
+  //         _usersCollection.doc(userId).collection('reminders').doc();
 
-      // Retrieve the auto-generated ID from the document reference
-      String documentId = documentReference.id;
+  //     // Retrieve the auto-generated ID from the document reference
+  //     String documentId = documentReference.id;
 
-      // Return the generated document ID
-      return documentId;
-    } catch (e) {
-      // Handle any errors here
-      log.e("Error generating document ID: $e");
-      return null; // You might want to handle errors more gracefully
-    }
-  }
+  //     // Return the generated document ID
+  //     return documentId;
+  //   } catch (e) {
+  //     // Handle any errors here
+  //     log.e("Error generating document ID: $e");
+  //     return null; // You might want to handle errors more gracefully
+  //   }
+  // }
 
-  Future<void> addReminder(String userId, Reminder reminder) async {
-    try {
-      final reminderDocument =
-          _usersCollection.doc(userId).collection('reminders').doc(reminder.id);
-      await reminderDocument.set(reminder.toJson(), SetOptions(merge: true));
-    } catch (e) {
-      log.e('Error adding reminder: $e');
-    }
-  }
+  // Future<void> addReminder(String userId, Reminder reminder) async {
+  //   try {
+  //     final reminderDocument =
+  //         _usersCollection.doc(userId).collection('reminders').doc(reminder.id);
+  //     await reminderDocument.set(reminder.toJson(), SetOptions(merge: true));
+  //   } catch (e) {
+  //     log.e('Error adding reminder: $e');
+  //   }
+  // }
 
-  Future<void> deleteReminder(String userId, String reminderId) async {
-    try {
-      await _usersCollection
-          .doc(userId)
-          .collection('reminders')
-          .doc(reminderId)
-          .delete();
-    } catch (e) {
-      log.e('Error deleting reminder: $e');
-    }
-  }
+  // Future<void> deleteReminder(String userId, String reminderId) async {
+  //   try {
+  //     await _usersCollection
+  //         .doc(userId)
+  //         .collection('reminders')
+  //         .doc(reminderId)
+  //         .delete();
+  //   } catch (e) {
+  //     log.e('Error deleting reminder: $e');
+  //   }
+  // }
 
-  Stream<List<Reminder>> getRemindersStream() {
-    try {
-      // Snapshot of the query result as a stream
-      Stream<QuerySnapshot> snapshots = _usersCollection
-          .doc(_authenticationService.currentUser!.uid)
-          .collection('reminders')
-          .snapshots();
+  // Stream<List<Reminder>> getRemindersStream() {
+  //   try {
+  //     // Snapshot of the query result as a stream
+  //     Stream<QuerySnapshot> snapshots = _usersCollection
+  //         .doc(_authenticationService.currentUser!.uid)
+  //         .collection('reminders')
+  //         .snapshots();
 
-      // Map the snapshots to a list of Vehicle objects
-      Stream<List<Reminder>> vehicleStream =
-          snapshots.map((QuerySnapshot snapshot) {
-        return snapshot.docs.map((DocumentSnapshot document) {
-          return Reminder.fromMap(document.data() as Map<String, dynamic>);
-        }).toList();
-      });
+  //     // Map the snapshots to a list of Vehicle objects
+  //     Stream<List<Reminder>> vehicleStream =
+  //         snapshots.map((QuerySnapshot snapshot) {
+  //       return snapshot.docs.map((DocumentSnapshot document) {
+  //         return Reminder.fromMap(document.data() as Map<String, dynamic>);
+  //       }).toList();
+  //     });
 
-      return vehicleStream;
-    } catch (e) {
-      // Handle any errors here
-      log.e("Error getting vehicles for user: $e");
-      // You might want to handle errors more gracefully
-      return Stream.value([]); // Return an empty list on error
-    }
-  }
+  //     return vehicleStream;
+  //   } catch (e) {
+  //     // Handle any errors here
+  //     log.e("Error getting vehicles for user: $e");
+  //     // You might want to handle errors more gracefully
+  //     return Stream.value([]); // Return an empty list on error
+  //   }
+  // }
 }

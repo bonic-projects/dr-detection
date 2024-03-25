@@ -4,6 +4,9 @@ import 'package:diabeticretinopathydetection/app/app.router.dart';
 import 'package:diabeticretinopathydetection/models/appuser.dart';
 import 'package:diabeticretinopathydetection/services/user_service.dart';
 import 'package:diabeticretinopathydetection/services/videosdk_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -19,6 +22,29 @@ class PatientViewModel extends BaseViewModel {
     _navigationService.pushNamedAndRemoveUntil(Routes.loginRegisterView);
   }
 
+    final ImagePicker _picker = ImagePicker();
+  List<Uint8List?> _selectedImages = [];
+
+  List<Uint8List?> get selectedImages => _selectedImages;
+
+  Future<Uint8List?> getImageGallery() async {
+    setBusy(true);
+
+    FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles();
+
+    if (filePickerResult != null) {
+      _selectedImages.addAll(filePickerResult.files.map((file) => file.bytes));
+      //_selectedImages = filePickerResult.files.first.bytes;
+    } else {
+      log.e("File Picking eror");
+    }
+
+    notifyListeners();
+
+    setBusy(false);
+    return null;
+  }
+
   final _videosdkService = locator<VideosdkService>();
   void createVideoCall() async {
     setBusy(true);
@@ -31,7 +57,7 @@ class PatientViewModel extends BaseViewModel {
 
       await Future.delayed(const Duration(seconds: 1));
       setBusy(false);
-      await _userService.updateUser(AppUser(videoId: m));
+      await _userService.updateUser(AppUser(videoId: m, isVideoOn: true));
       _navigationService.navigateToHomeView(meetingid: meetingId);
     }
   }
