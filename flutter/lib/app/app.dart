@@ -4,7 +4,6 @@ import 'package:diabeticretinopathydetection/ui/dialogs/info_alert/info_alert_di
 import 'package:diabeticretinopathydetection/ui/views/home/aler_widget/aler_widget_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/home/home_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/startup/startup_view.dart';
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,7 +13,6 @@ import 'package:diabeticretinopathydetection/ui/views/register/register_view.dar
 import 'package:diabeticretinopathydetection/services/user_service.dart';
 import 'package:diabeticretinopathydetection/services/firestore_service.dart';
 import 'package:diabeticretinopathydetection/ui/views/doctor/doctor_view.dart';
-import 'package:videosdk/videosdk.dart';
 import 'package:diabeticretinopathydetection/ui/views/patient/patient_view.dart';
 import 'package:diabeticretinopathydetection/ui/views/chat/chat_view.dart';
 // @stacked-import
@@ -43,6 +41,7 @@ import 'package:diabeticretinopathydetection/ui/views/chat/chat_view.dart';
     LazySingleton(classType: FirebaseAuthenticationService),
     LazySingleton(classType: SnackbarService),
     LazySingleton(classType: VideosdkService),
+    
 // @stacked-service
   ],
   bottomsheets: [

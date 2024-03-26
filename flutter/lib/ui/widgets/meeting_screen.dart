@@ -1,7 +1,10 @@
+import 'package:diabeticretinopathydetection/ui/widgets/chat/chat_view.dart';
 import 'package:diabeticretinopathydetection/ui/widgets/meeting_controls.js.dart';
 import 'package:diabeticretinopathydetection/ui/widgets/participant_tile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:videosdk/videosdk.dart';
 
 class MeetingScreen extends StatefulWidget {
@@ -17,6 +20,8 @@ class MeetingScreen extends StatefulWidget {
 
 class _MeetingScreenState extends State<MeetingScreen> {
   late Room _room;
+  late Room _chatRoom;
+
   var micEnabled = true;
   var camEnabled = true;
 
@@ -24,6 +29,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   @override
   void initState() {
+    _chatRoom = VideoSDK.createRoom(roomId: widget.meetingId, displayName: "Chat Name", token: widget.token);
+
     // create room
     _room = VideoSDK.createRoom(
         roomId: widget.meetingId,
@@ -117,6 +124,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
               ),
             ),
           ),
+          Expanded(child: ChatView(meeting: _chatRoom)),
+
           MeetingControls(
             onToggleMicButtonPressed: () {
               micEnabled ? _room.muteMic() : _room.unmuteMic();

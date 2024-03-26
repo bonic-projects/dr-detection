@@ -32,11 +32,13 @@ class HomeView extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: model.isBusy
-                ? CircularProgressIndicator() // Show a loader while busy
-                : MeetingScreen(
-                    meetingId: meetingid,
-                    token: model.sdkToken,
-                  ),
+                ? const CircularProgressIndicator() // Show a loader while busy
+                : Expanded(
+                  child: MeetingScreen(
+                      meetingId: meetingid,
+                      token: model.sdkToken,
+                    ),
+                ),
           ),
         ),
       ),

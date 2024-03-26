@@ -9,6 +9,7 @@ class DoctorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return ViewModelBuilder<DoctorViewModel>.reactive(
       viewModelBuilder: () => DoctorViewModel(),
       onViewModelReady: (model) => model.fetchUserData(),
